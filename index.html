@@ -3,46 +3,562 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Scrollable Menu</title>
+<title>New Manakamana Tandoori & Chicken Corner</title>
 <style>
-    body {
+    * {
         margin: 0;
         padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        min-height: 100vh;
-        background-color: #f5f5f5;
+        box-sizing: border-box;
     }
-
+    
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #0a0a0a;
+        line-height: 1.6;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+    
     .container {
-        width: 100%;
-        max-width: 600px; /* adjust based on your menu width */
-        overflow-y: auto;
-        height: 100vh; /* full viewport height to allow scrolling */
+        max-width: 800px;
+        margin: 0 auto;
+        background: #0a0a0a;
+        min-height: 100vh;
+    }
+    
+    .header {
+        background: #0a0a0a;
+        padding: 60px 20px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        min-height: 300px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 20px 0;
-        box-sizing: border-box;
+        justify-content: center;
     }
+    
+    /* Animated gradient background */
+    .header::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 150%;
+        height: 150%;
+        background: radial-gradient(
+            circle at center,
+            rgba(138, 43, 226, 0.15) 0%,
+            rgba(75, 0, 130, 0.1) 25%,
+            rgba(255, 20, 147, 0.1) 50%,
+            rgba(0, 191, 255, 0.05) 75%,
+            transparent 100%
+        );
+        animation: pulse 8s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0.5;
+        }
+        50% {
+            transform: translate(-50%, -50%) scale(1.2);
+            opacity: 0.8;
+        }
+    }
+    
 
-    .container img {
-        width: 90%; /* scale image down if needed */
+    
+    .header h1 {
+        font-size: 32px;
+        margin-bottom: 10px;
+        font-weight: 700;
+        position: relative;
+        z-index: 10;
+        background: linear-gradient(
+            90deg,
+            #8b5cf6,
+            #ec4899,
+            #06b6d4,
+            #8b5cf6
+        );
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: shimmer 3s linear infinite;
+        filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5));
+    }
+    
+    @keyframes shimmer {
+        0% {
+            background-position: 0% center;
+        }
+        100% {
+            background-position: 200% center;
+        }
+    }
+    
+    .header p {
+        font-size: 16px;
+        color: #b0b0b0;
+        position: relative;
+        z-index: 10;
+        animation: fadeIn 1s ease-in;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .content {
+        padding: 30px 20px;
+        background: #0a0a0a;
+        position: relative;
+    }
+    
+    .info-box {
+        background: rgba(20, 20, 20, 0.8);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 25px;
+        position: relative;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+    }
+    
+    .info-box:hover {
+        border-color: rgba(139, 92, 246, 0.5);
+        box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
+    }
+    
+    .info-box h2 {
+        font-size: 20px;
+        color: #fff;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .phone-numbers {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+    
+    .phone-btn {
+        flex: 1;
+        min-width: 140px;
+        display: inline-block;
+        padding: 12px 20px;
+        background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: 500;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .phone-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
+    }
+    
+    .phone-btn:hover::before {
+        left: 100%;
+    }
+    
+    .phone-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(139, 92, 246, 0.4);
+    }
+    
+    .map-wrapper {
+        border-radius: 12px;
+        overflow: hidden;
+        height: 300px;
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        box-shadow: 0 0 20px rgba(139, 92, 246, 0.1);
+    }
+    
+    .map-wrapper iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        filter: grayscale(0.3) brightness(0.9);
+    }
+    
+    .menu-section {
+        position: relative;
+    }
+    
+    .menu-section h2 {
+        font-size: 24px;
+        color: #fff;
         margin-bottom: 20px;
-        display: block;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+    
+    .menu-container {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .menu-img {
+        width: 100%;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 0 20px rgba(139, 92, 246, 0.1);
+        position: relative;
+        z-index: 2;
+    }
+    
+    .menu-img:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+        border-color: rgba(139, 92, 246, 0.5);
+    }
+    
+    .menu-img:active {
+        transform: scale(1.3);
+        z-index: 100;
+    }
+    
+    /* Side food particles */
+    .side-particle {
+        position: absolute;
+        font-size: 32px;
+        pointer-events: none;
+        opacity: 0;
+        filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.6));
+        z-index: 1;
+    }
+    
+    /* Left side particles */
+    .side-particle.left {
+        left: -40px;
+        animation: floatLeft 14s infinite;
+    }
+    
+    .side-particle.left:nth-of-type(1) {
+        animation-delay: 0s;
+    }
+    
+    .side-particle.left:nth-of-type(2) {
+        animation-delay: 3.5s;
+    }
+    
+    .side-particle.left:nth-of-type(3) {
+        animation-delay: 7s;
+    }
+    
+    .side-particle.left:nth-of-type(4) {
+        animation-delay: 10.5s;
+    }
+    
+    /* Right side particles */
+    .side-particle.right {
+        right: -40px;
+        animation: floatRight 14s infinite;
+    }
+    
+    .side-particle.right:nth-of-type(5) {
+        animation-delay: 1.75s;
+    }
+    
+    .side-particle.right:nth-of-type(6) {
+        animation-delay: 5.25s;
+    }
+    
+    .side-particle.right:nth-of-type(7) {
+        animation-delay: 8.75s;
+    }
+    
+    .side-particle.right:nth-of-type(8) {
+        animation-delay: 12.25s;
+    }
+    
+    @keyframes floatLeft {
+        0% {
+            transform: translateY(120%) rotate(0deg) translateX(-20px);
+            opacity: 0;
+        }
+        10% {
+            opacity: 0.7;
+        }
+        50% {
+            transform: translateY(50%) rotate(180deg) translateX(10px);
+            opacity: 0.8;
+        }
+        90% {
+            opacity: 0.7;
+        }
+        100% {
+            transform: translateY(-20%) rotate(360deg) translateX(-20px);
+            opacity: 0;
+        }
+    }
+    
+    @keyframes floatRight {
+        0% {
+            transform: translateY(120%) rotate(0deg) translateX(20px);
+            opacity: 0;
+        }
+        10% {
+            opacity: 0.7;
+        }
+        50% {
+            transform: translateY(50%) rotate(-180deg) translateX(-10px);
+            opacity: 0.8;
+        }
+        90% {
+            opacity: 0.7;
+        }
+        100% {
+            transform: translateY(-20%) rotate(-360deg) translateX(20px);
+            opacity: 0;
+        }
+    }
+    
+    footer {
+        background: #0a0a0a;
+        text-align: center;
+        padding: 30px;
+        color: #808080;
+        border-top: 1px solid rgba(139, 92, 246, 0.2);
+    }
+    
+    /* Food emoji particles effect */
+    .particle {
+        position: absolute;
+        font-size: 24px;
+        pointer-events: none;
+        opacity: 0;
+        animation: float 12s infinite;
+        filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.6));
+    }
+    
+    .particle:nth-child(5) {
+        left: 10%;
+        animation-delay: 0s;
+    }
+    
+    .particle:nth-child(6) {
+        left: 30%;
+        animation-delay: 2.4s;
+    }
+    
+    .particle:nth-child(7) {
+        left: 50%;
+        animation-delay: 4.8s;
+    }
+    
+    .particle:nth-child(8) {
+        left: 70%;
+        animation-delay: 7.2s;
+    }
+    
+    .particle:nth-child(9) {
+        left: 90%;
+        animation-delay: 9.6s;
+    }
+    
+    @keyframes float {
+        0% {
+            transform: translateY(100vh) rotate(0deg);
+            opacity: 0;
+        }
+        10% {
+            opacity: 0.8;
+        }
+        90% {
+            opacity: 0.8;
+        }
+        100% {
+            transform: translateY(-100px) rotate(360deg);
+            opacity: 0;
+        }
+    }
+    
+    /* Smoke/steam effect */
+    .steam {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(to top, 
+            rgba(255, 107, 53, 0.05),
+            rgba(236, 72, 153, 0.03),
+            transparent
+        );
+        pointer-events: none;
+        animation: steam 6s ease-in-out infinite;
+    }
+    
+    @keyframes steam {
+        0%, 100% {
+            opacity: 0.3;
+            transform: translateY(0);
+        }
+        50% {
+            opacity: 0.6;
+            transform: translateY(-20px);
+        }
+    }
+    
+    /* Sizzle effect for header */
+    .sizzle {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        background: #ff6b35;
+        border-radius: 50%;
+        pointer-events: none;
+        animation: sizzle 2s infinite;
+        box-shadow: 0 0 10px #ff6b35;
+    }
+    
+    .sizzle:nth-child(10) {
+        left: 20%;
+        top: 30%;
+        animation-delay: 0s;
+    }
+    
+    .sizzle:nth-child(11) {
+        left: 80%;
+        top: 40%;
+        animation-delay: 0.5s;
+    }
+    
+    .sizzle:nth-child(12) {
+        left: 40%;
+        top: 60%;
+        animation-delay: 1s;
+    }
+    
+    .sizzle:nth-child(13) {
+        left: 60%;
+        top: 70%;
+        animation-delay: 1.5s;
+    }
+    
+    @keyframes sizzle {
+        0% {
+            transform: scale(0) translateY(0);
+            opacity: 1;
+        }
+        50% {
+            transform: scale(1.5) translateY(-30px);
+            opacity: 0.5;
+        }
+        100% {
+            transform: scale(0) translateY(-60px);
+            opacity: 0;
+        }
+    }
+    
+    @media (max-width: 600px) {
+        .header h1 {
+            font-size: 24px;
+        }
+        
+        .phone-numbers {
+            flex-direction: column;
+        }
+        
+        .phone-btn {
+            width: 100%;
+        }
     }
 </style>
 </head>
 <body>
-
 <div class="container">
-    <h1>Welcome</h1>
-    <img src="menue_pg1.png" alt="Menu Page 1">
-    <img src="menue_pg2.png" alt="Menu Page 2">
+    <div class="header">
+        <div class="particle">🍗</div>
+        <div class="particle">🍖</div>
+        <div class="particle">🔥</div>
+        <div class="particle">🌶️</div>
+        <div class="particle">🍗</div>
+        <div class="sizzle"></div>
+        <div class="sizzle"></div>
+        <div class="sizzle"></div>
+        <div class="sizzle"></div>
+        <div class="steam"></div>
+        <h1>New Manakamana Tandoori & Chicken Corner</h1>
+        <p>Delicious food, served with love 🍽️</p>
+    </div>
+    
+    <div class="content">
+        <div class="info-box">
+            <h2>📞 Contact Us</h2>
+            <div class="phone-numbers">
+                <a href="tel:98XXXXXXXX" class="phone-btn">98XXXXXXXX</a>
+                <a href="tel:97XXXXXXXX" class="phone-btn">97XXXXXXXX</a>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h2>📍 Find Us</h2>
+            <div class="map-wrapper">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d4812.490677314494!2d84.52971699999999!3d27.672361!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2s!5e1!3m2!1sen!2snp!4v1766163615826!5m2!1sen!2snp" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+        
+        <div class="menu-section">
+            <h2>Our Menu</h2>
+            <div class="menu-container">
+                <div class="side-particle left">🍗</div>
+                <div class="side-particle left">🔥</div>
+                <div class="side-particle left">🌶️</div>
+                <div class="side-particle left">🍖</div>
+                <div class="side-particle right">🍗</div>
+                <div class="side-particle right">🔥</div>
+                <div class="side-particle right">🍖</div>
+                <div class="side-particle right">🌶️</div>
+                <img src="menue_pg1.png" alt="Menu Page 1" class="menu-img">
+            </div>
+            <div class="menu-container">
+                <div class="side-particle left">🍖</div>
+                <div class="side-particle left">🌶️</div>
+                <div class="side-particle left">🔥</div>
+                <div class="side-particle left">🍗</div>
+                <div class="side-particle right">🌶️</div>
+                <div class="side-particle right">🍗</div>
+                <div class="side-particle right">🔥</div>
+                <div class="side-particle right">🍖</div>
+                <img src="menue_pg2.png" alt="Menu Page 2" class="menu-img">
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Thank you for visiting! We look forward to serving you ❤️</p>
+    </footer>
 </div>
-
 </body>
 </html>
